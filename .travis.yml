@@ -7,16 +7,16 @@ script:
   # prepare qemu
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   # build homie-dashboard images
-  - travis_wait 60 make TARGET=armhf
-  - travis_wait 60 make TARGET=amd64
-  # push images. $VERSION is populated by the POST request
-  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"  
-  - docker tag homiedashboard/armhf "homiedashboard/armhf:$VERSION"
-  - docker push "homiedashboard/armhf:$VERSION"
-  - docker tag homiedashboard/amd64 "homiedashboard/amd64:$VERSION"
-  - docker push "homiedashboard/amd64:$VERSION"
-  - docker push homiedashboard/armhf
-  - docker push homiedashboard/amd64
+  - travis_wait 60 make TARGET=armhf HOMIE_DASHBOARD_VERSION=$HOMIE_DASHBOARD_VERSION
+  - travis_wait 60 make TARGET=amd64 HOMIE_DASHBOARD_VERSION=$HOMIE_DASHBOARD_VERSION
+  # push images. $HOMIE_DASHBOARD_VERSION is populated by the POST request
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  - docker tag homiedashboard/homie-dashboard:armhf "homiedashboard/homie-dashboard:armhf-$HOMIE_DASHBOARD_VERSION"
+  - docker push "homiedashboard/homie-dashboard:armhf-$HOMIE_DASHBOARD_VERSION"
+  - docker tag homiedashboard/homie-dashboard:amd64 "homiedashboard/homie-dashboard:amd64-$HOMIE_DASHBOARD_VERSION"
+  - docker push "homiedashboard/homie-dashboard:amd64-$HOMIE_DASHBOARD_VERSION"
+  - docker push homiedashboard/homie-dashboard:armhf
+  - docker push homiedashboard/homie-dashboard:amd64
     
 after_success:
   - echo "Done!"

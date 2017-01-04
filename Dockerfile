@@ -1,8 +1,9 @@
 FROM multiarch/alpine:x86_64-v3.4
 #FROM multiarch/alpine:armhf-v3.4 # arch=armhf
 ARG ARCH=amd64
+ARG HOMIE_DASHBOARD_VERSION=latest
 # needed for ARG not to be ignored
-RUN echo "Building Docker image for ${ARCH}"
+RUN echo "Building Homie Dashboard $HOMIE_DASHBOARD_VERSION Docker image for $ARCH"
 
 # Home directory for homie-dashboard source code
 RUN mkdir -p /usr/src/homie-dashboard
@@ -20,7 +21,7 @@ RUN adduser -h /usr/src/homie-dashboard -D -H homie-dashboard \
 RUN apk add --no-cache nodejs
 
 RUN apk add --no-cache --virtual build-dependencies make g++ python \
-  && npm install homie-dashboard \
+  && npm install "homie-dashboard@$HOMIE_DASHBOARD_VERSION" \
   && apk del build-dependencies
 
 USER homie-dashboard
