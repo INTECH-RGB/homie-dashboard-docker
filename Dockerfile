@@ -1,5 +1,5 @@
-FROM multiarch/alpine:x86_64-v3.4
-#FROM multiarch/alpine:armhf-v3.4 # arch=armhf
+FROM node:6-alpine
+#FROM resin/armhf-alpine-node:6-slim # arch=armhf
 ARG ARCH=amd64
 ARG HOMIE_DASHBOARD_VERSION=latest
 # needed for ARG not to be ignored
@@ -17,8 +17,6 @@ WORKDIR /usr/src/homie-dashboard
 RUN adduser -h /usr/src/homie-dashboard -D -H homie-dashboard \
   && chown -R homie-dashboard:homie-dashboard /homie-dashboard \
   && chown -R homie-dashboard:homie-dashboard /usr/src/homie-dashboard
-
-RUN apk add --no-cache nodejs
 
 RUN apk add --no-cache --virtual build-dependencies make g++ python \
   && npm install "homie-dashboard@$HOMIE_DASHBOARD_VERSION" \
