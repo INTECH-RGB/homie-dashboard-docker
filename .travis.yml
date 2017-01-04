@@ -12,9 +12,9 @@ script:
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   # build homie-dashboard images
   - make TARGET=amd64 HOMIE_DASHBOARD_VERSION="$HOMIE_DASHBOARD_VERSION"
-  - travis_wait 60 make TARGET=armhf HOMIE_DASHBOARD_VERSION="$HOMIE_DASHBOARD_VERSION"
+  # - travis_wait 60 make TARGET=armhf HOMIE_DASHBOARD_VERSION="$HOMIE_DASHBOARD_VERSION"
   # parse homie-dashboard version. ^$HOMIE_DASHBOARD_VERSION is provided by the POST request
-  - >
+  - |
     source ./semver.sh
 
     export MAJOR=0
