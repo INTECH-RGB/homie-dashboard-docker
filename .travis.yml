@@ -1,0 +1,26 @@
+sudo: required
+services:
+  - docker
+language: bash
+
+script:
+  - >
+    docker run --rm --privileged multiarch/qemu-user-static:register --reset
+    travis_wait 60 make TARGET=armhf
+    travis_wait 60 make TARGET=amd64
+    docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+    
+    # $VERSION injected by POST request
+    
+    docker tag homiedashboard/armhf "homiedashboard/armhf:$VERSION"
+    docker push "homiedashboard/armhf:$VERSION"
+    
+    docker tag homiedashboard/amd64 "homiedashboard/amd64:$VERSION"
+    docker push "homiedashboard/amd64:$VERSION"
+    
+    docker push homiedashboard/armhf
+    docker push homiedashboard/amd64
+    
+after_success:
+  - >
+    echo "Done!"
