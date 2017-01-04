@@ -3,20 +3,34 @@ services:
   - docker
 language: bash
 
+install:
+  - wget https://raw.githubusercontent.com/cloudflare/semver_bash/master/semver.sh
+  - chmod +x ./semver.sh
+
 script:
   # prepare qemu
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   # build homie-dashboard images
   - make TARGET=amd64 HOMIE_DASHBOARD_VERSION="$HOMIE_DASHBOARD_VERSION"
   - travis_wait 60 make TARGET=armhf HOMIE_DASHBOARD_VERSION="$HOMIE_DASHBOARD_VERSION"
-  # push images. $HOMIE_DASHBOARD_VERSION is populated by the POST request
+  # parse homie-dashboard version. ^$HOMIE_DASHBOARD_VERSION is provided by the POST request
+  - >
+    source ./semver.sh
+    
+    export MAJOR=0  
+    export MINOR=0  
+    export PATCH=0  
+    export SPECIAL=""
+    
+    semverParseInto "$HOMIE_DASHBOARD_VERSION" MAJOR MINOR PATCH SPECIAL
+  # push images
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-  - docker tag homiedashboard/homie-dashboard:amd64 "homiedashboard/homie-dashboard:amd64-$HOMIE_DASHBOARD_VERSION"
-  - docker push "homiedashboard/homie-dashboard:amd64-$HOMIE_DASHBOARD_VERSION"
-  - docker tag homiedashboard/homie-dashboard:armhf "homiedashboard/homie-dashboard:armhf-$HOMIE_DASHBOARD_VERSION"
-  - docker push "homiedashboard/homie-dashboard:armhf-$HOMIE_DASHBOARD_VERSION"
-  - docker push homiedashboard/homie-dashboard:amd64
-  - docker push homiedashboard/homie-dashboard:armhf
+  - docker tag homiedashboard/homie-dashboard:amd64-latest "homiedashboard/homie-dashboard:amd64-$MAJOR"
+  - docker push "homiedashboard/homie-dashboard:amd64-$MAJOR"
+  #- docker tag homiedashboard/homie-dashboard:armhf-latest "homiedashboard/homie-dashboard:armhf-$MAJOR"
+  #- docker push "homiedashboard/homie-dashboard:armhf-$MAJOR"
+  - docker push homiedashboard/homie-dashboard:amd64-latest
+  #- docker push homiedashboard/homie-dashboard:armhf-latest
     
 after_success:
   - echo "Done!"
