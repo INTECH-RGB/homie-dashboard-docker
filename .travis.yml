@@ -12,7 +12,7 @@ script:
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   # build homie-dashboard images
   - make TARGET=amd64 HOMIE_DASHBOARD_VERSION="$HOMIE_DASHBOARD_VERSION"
-  # - travis_wait 60 make TARGET=armhf HOMIE_DASHBOARD_VERSION="$HOMIE_DASHBOARD_VERSION"
+  - travis_wait 60 make TARGET=armhf HOMIE_DASHBOARD_VERSION="$HOMIE_DASHBOARD_VERSION"
   # parse homie-dashboard version. ^$HOMIE_DASHBOARD_VERSION is provided by the POST request
   - |
     source ./semver.sh
@@ -31,10 +31,10 @@ script:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker tag homiedashboard/homie-dashboard:amd64-latest "homiedashboard/homie-dashboard:amd64-$MAJOR"
   - docker push "homiedashboard/homie-dashboard:amd64-$MAJOR"
-  #- docker tag homiedashboard/homie-dashboard:armhf-latest "homiedashboard/homie-dashboard:armhf-$MAJOR"
-  #- docker push "homiedashboard/homie-dashboard:armhf-$MAJOR"
+  - docker tag homiedashboard/homie-dashboard:armhf-latest "homiedashboard/homie-dashboard:armhf-$MAJOR"
+  - docker push "homiedashboard/homie-dashboard:armhf-$MAJOR"
   - docker push homiedashboard/homie-dashboard:amd64-latest
-  #- docker push homiedashboard/homie-dashboard:armhf-latest
+  - docker push homiedashboard/homie-dashboard:armhf-latest
     
 after_success:
   - echo "Done!"
