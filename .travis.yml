@@ -7,8 +7,8 @@ script:
   # prepare qemu
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   # build homie-dashboard images
-  - make TARGET=amd64 HOMIE_DASHBOARD_VERSION=$HOMIE_DASHBOARD_VERSION
-  - travis_wait 60 make TARGET=armhf HOMIE_DASHBOARD_VERSION=$HOMIE_DASHBOARD_VERSION
+  - make TARGET=amd64 HOMIE_DASHBOARD_VERSION="$HOMIE_DASHBOARD_VERSION"
+  - travis_wait 60 make TARGET=armhf HOMIE_DASHBOARD_VERSION="$HOMIE_DASHBOARD_VERSION"
   # push images. $HOMIE_DASHBOARD_VERSION is populated by the POST request
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker tag homiedashboard/homie-dashboard:amd64 "homiedashboard/homie-dashboard:amd64-$HOMIE_DASHBOARD_VERSION"
