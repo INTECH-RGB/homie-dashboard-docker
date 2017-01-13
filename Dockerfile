@@ -31,4 +31,4 @@ VOLUME ["/homie-dashboard"]
 
 EXPOSE 35589
 
-CMD ["node", "./node_modules/homie-dashboard/src/bin/cli.js", "--ip", "0.0.0.0", "--port", "35589", "--dataDir", "/homie-dashboard"]
+CMD ["node", "./node_modules/homie-dashboard/src/bin/cli.js", "start", "--ip", "0.0.0.0", "--port", "35589", "--dataDir", "/homie-dashboard"]
