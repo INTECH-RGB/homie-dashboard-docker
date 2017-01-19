@@ -4,7 +4,7 @@ BASE_ARCH ?= amd64
 HOMIE_DASHBOARD_VERSION ?= latest
 
 build: tmp-$(TARGET)/Dockerfile
-	docker build --build-arg ARCH=$(TARGET) --build-arg HOMIE_DASHBOARD_VERSION=$(HOMIE_DASHBOARD_VERSION) --no-cache -t homiedashboard/homie-dashboard:$(TARGET)-latest tmp-$(TARGET)
+	docker build --build-arg ARG_ARCH=$(TARGET) --build-arg ARG_HOMIE_DASHBOARD_VERSION=$(HOMIE_DASHBOARD_VERSION) --no-cache -t homiedashboard/homie-dashboard:$(TARGET)-latest tmp-$(TARGET)
 
 tmp-$(TARGET)/Dockerfile: Dockerfile $(shell find overlay-common overlay-$(TARGET))
 	rm -rf tmp-$(TARGET)
