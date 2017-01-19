@@ -8,6 +8,8 @@ install:
   - chmod +x ./semver.sh
 
 script:
+  # abort if a single step fails
+  - set -e
   # prepare qemu
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   # build homie-dashboard images
