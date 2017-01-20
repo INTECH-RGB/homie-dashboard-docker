@@ -1,5 +1,5 @@
 FROM homiedashboard/node:amd64-latest
-#FROM homiedashboard/node:armhf-latest # arch=armhf
+#FROM resin/raspberrypi3-alpine-node:7-slim # arch=armhf
 ARG ARG_ARCH=amd64
 ARG ARG_HOMIE_DASHBOARD_VERSION=latest
 # needed for ARG not to be ignored
