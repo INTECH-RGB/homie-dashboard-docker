@@ -1,4 +1,4 @@
-FROM homiedashboard/node:amd64-latest
+FROM node:7-alpine
 #FROM resin/raspberrypi3-alpine-node:7-slim # arch=armhf
 ARG ARG_ARCH=amd64
 ARG ARG_HOMIE_DASHBOARD_VERSION=latest
