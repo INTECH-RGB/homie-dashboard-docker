@@ -25,10 +25,6 @@ script:
     export SPECIAL=""
     
     semverParseInto "$HOMIE_DASHBOARD_VERSION" MAJOR MINOR PATCH SPECIAL
-    
-    if [[ "$MAJOR" -eq "0" ]]; then
-      MAJOR="0.$MINOR"
-    fi
   # push images
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker tag homiedashboard/homie-dashboard:amd64-latest "homiedashboard/homie-dashboard:amd64-$MAJOR"
