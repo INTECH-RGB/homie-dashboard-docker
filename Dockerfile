@@ -29,6 +29,7 @@ USER homie-dashboard
 
 VOLUME ["/homie-dashboard"]
 
-EXPOSE 35589
+# HTTP, Aqara UDP, Yeelight SSDP
+EXPOSE 35589 9898 1982
 
 CMD ["node", "./node_modules/homie-dashboard/src/bin/cli.js", "start", "--ip", "0.0.0.0", "--port", "35589", "--dataDir", "/homie-dashboard"]
