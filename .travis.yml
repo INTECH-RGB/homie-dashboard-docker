@@ -32,9 +32,17 @@ script:
   # push images
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker tag homiedashboard/homie-dashboard:amd64-latest "homiedashboard/homie-dashboard:amd64-$MAJOR"
-  - docker push "homiedashboard/homie-dashboard:amd64-$MAJOR"
   - docker tag homiedashboard/homie-dashboard:armhf-latest "homiedashboard/homie-dashboard:armhf-$MAJOR"
+  - docker tag homiedashboard/homie-dashboard:amd64-latest "homiedashboard/homie-dashboard:amd64-$MAJOR.$MINOR"
+  - docker tag homiedashboard/homie-dashboard:armhf-latest "homiedashboard/homie-dashboard:armhf-$MAJOR.$MINOR"
+  - docker tag homiedashboard/homie-dashboard:amd64-latest "homiedashboard/homie-dashboard:amd64-$MAJOR.$MINOR.$PATCH"
+  - docker tag homiedashboard/homie-dashboard:armhf-latest "homiedashboard/homie-dashboard:armhf-$MAJOR.$MINOR.$PATCH"
+  - docker push "homiedashboard/homie-dashboard:amd64-$MAJOR"
   - docker push "homiedashboard/homie-dashboard:armhf-$MAJOR"
+  - docker push "homiedashboard/homie-dashboard:amd64-$MAJOR.$MINOR"
+  - docker push "homiedashboard/homie-dashboard:armhf-$MAJOR.$MINOR"
+  - docker push "homiedashboard/homie-dashboard:amd64-$MAJOR.$MINOR.$PATCH"
+  - docker push "homiedashboard/homie-dashboard:armhf-$MAJOR.$MINOR.$PATCH"
   - docker push homiedashboard/homie-dashboard:amd64-latest
   - docker push homiedashboard/homie-dashboard:armhf-latest
     
